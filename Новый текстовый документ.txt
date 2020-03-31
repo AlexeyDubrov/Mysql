@@ -1,0 +1,128 @@
+DROP DATABASE IF EXISTS coursework;
+CREATE DATABASE coursework;
+USE coursework;
+
+CREATE TABLE departs(
+	d_id SERIAL, 
+	d_name varchar(100) NOT NULL, 
+	PRIMARY KEY (d_id, d_name)
+);
+ALTER TABLE departs ADD INDEX d_name_idx(d_name);
+
+CREATE TABLE rooms(
+	r_depart_id SERIAL, 
+	room  numeric(4) not null,
+	phone bigint, 
+	unique(room, phone),
+	FOREIGN KEY (r_depart_id) REFERENCES departs(d_id),
+	PRIMARY KEY(room, phone)
+);
+
+create table posts ( 
+	id SERIAL,			/*таблица должности, post - должность, salary - оклад*/
+	name varchar(100), 
+	salary numeric(6,2)  not null check(salary>=4500),
+	PRIMARY KEY(id, name),
+	INDEX id_name_salary_idx(id, name, salary)
+);
+
+create table employees ( 
+	e_id SERIAL primary key, 
+	firstname varchar(50) not null, 
+	lastname varchar(50) not null, 
+	born date not null, 
+	sex char(1) check(sex in ('ж','м')), 
+	depart_name varchar(50),      /* отдел  */
+	post_name varchar(30), /*должность*/
+	e_room numeric(4) not null, 
+	e_phone bigint not null, 
+	FOREIGN KEY(e_room,e_phone) REFERENCES rooms(room, phone),
+	FOREIGN KEY (depart_name) REFERENCES departs(d_name),
+	FOREIGN KEY (e_id) REFERENCES posts(id),
+	INDEX e_id_firstname_lastname_idx(e_id, firstname, lastname)
+); 
+
+create table edu ( 
+	u_id  SERIAL PRIMARY KEY, /*id сотрудника*/
+	u_type  varchar(20)  not null, 
+	u_spec  enum('начальное', 'среднее', 'высшее', 'средне-специальное'), 
+	u_year int not null,
+	FOREIGN KEY (u_id) REFERENCES employees(e_id)
+); 
+ALTER TABLE edu ADD INDEX u_id_idx(u_id);
+
+	
+create table adrphones (	/*адреса и телефоны */
+	a_id SERIAL PRIMARY KEY, /*  id сотрудника */
+	a_adr  varchar(50), 
+	a_phone  varchar(30),
+	FOREIGN KEY (a_id) REFERENCES employees(e_id),
+	INDEX a_id_a_adr_a_phone_idx(a_id, a_adr, a_phone)
+);
+
+create table clients (
+	c_id  SERIAL  primary key, 
+	c_company varchar(40)  not null, 
+	c_adr  varchar(50)  not null, 
+	c_person  varchar(50)  not null, 
+	c_phone BIGINT,
+	INDEX c_id_idx(c_id)
+);
+
+create table projects ( 
+	p_id  SERIAL PRIMARY KEY, 
+	p_title  varchar(100)  not null, 
+	p_depart varchar (50),              /*  отдел  */
+	p_company_id BIGINT UNSIGNED NOT NULL UNIQUE,   /*  заказчик */
+	p_chief  numeric(4)  references employees, 
+	p_begin  date not null, 
+	p_end  date not null, 
+	p_finish  date, 
+	p_cost  numeric(10) not null check(p_cost>0), 
+	check (p_end>p_begin), 
+	check (p_finish is null or p_finish>p_begin),
+	FOREIGN KEY (p_id) REFERENCES departs(d_id),
+	FOREIGN KEY (p_company_id) REFERENCES clients(c_id),
+	INDEX p_id_p_company_idx(p_id, p_company_id)
+); 
+
+create table stages (              /*  Этапы проекта */
+	s_pro_id  SERIAL PRIMARY KEY, 
+	s_num  numeric(2)  not null,    /* Номер этапа */
+	s_title  varchar(200)  not null, /* Название этапа */
+	s_begin  date   not null, /* дата начала  */
+	s_finish  date   not null,  /*  Дата окончания  */
+	s_cost  numeric(10)  not null,  /*  стоимость этапа */
+	check (s_cost>0), 
+	check (s_finish>s_begin), 
+	FOREIGN KEY (s_pro_id) REFERENCES projects(p_id)
+);
+create table job ( 
+	j_pro_id SERIAL PRIMARY KEY,  /*  Проект  */
+	j_emp_id BIGINT UNSIGNED NOT NULL UNIQUE, /*  Сотрудник  */
+	j_role  ENUM ('исполнитель', 'консультант') not null,  
+	check(j_role in ('исполнитель', 'консультант')),
+	FOREIGN KEY (j_pro_id) REFERENCES projects (p_id),
+	FOREIGN KEY (j_emp_id) REFERENCES employees (e_id)
+);
+
+
+INSERT INTO departs VALUES
+(1, 'advertising department'),
+(2, 'finance department'),
+(3, 'IT'),
+(4, 'legal department'),
+(5, 'marketing department'),
+(6, 'orders'),      /*отдел заказов*/
+(7, 'accounting department')
+;
+
+INSERT INTO rooms (r_depart_id, room, phone) VALUES 
+(1, 1001, 123322),
+(2, 1005, 112211),
+(3, 2002, 257895),
+(4, 3002, 395874),
+(5, 3025, 357831),
+(6, 1125, 135554),
+(7, 5217, 502145)
+;
