@@ -139,7 +139,7 @@ INSERT INTO posts (id, name, salary) VALUES
 (9, 'web developer', 120000),
 (10, 'web programmer', 120000),
 (11, 'web designer', 120000),
-(12, 'solicitor ', 60000),
+(12, 'solicitor ', 60000), /*юрисконсульт*/
 (13, 'lawyer', 80000),
 (14, 'legal department', 150000),
 (15, 'junior specialist of the marketing department', 40000),
@@ -150,3 +150,34 @@ INSERT INTO posts (id, name, salary) VALUES
 (20, 'specialist of orders', 70000),   /*специалист отдела заказов*/
 (21, 'chief accountant', 150000)
 (22, 'accountant', 60000),
+
+INSERT INTO employees (e_id, firstname, lastname, born, sex, depart_name, post_name, e_room, e_phone) VALUES
+(1, 'Miller', 'Robert', '1970-10-25', 'м', 'advertising department', '1001', '123322'),
+(2, 'Bishop', 'Augustine', '1972-03-02', 'м', 'advertising department', '1001', '123322'),
+(3, 'Reed', 'Christopher', '1976-07-10', 'м', 'advertising department', '1001', '123322'),
+(4, 'Reynolds Maurice', '1981-05-31', 'м', 'finance department', '1005', '112211'),
+(5, 'Moody', 'Jeremy', '1970-06-06', 'м', 'finance department', '1005', '112211'),
+(6, 'Walker', 'Samuel', '1979-02-25', 'м', 'finance department', '1005', '112211'),
+(7, 'Francis', 'Sybil', '1984-10-15', 'ж', 'finance department', '1005', '112211'),
+(8, 'Bryant', 'Carol', '1982-09-13', 'ж', 'finance department', '1005', '112211'),
+(9, 'Carpenter', 'Bonnie', '1986-01-10', 'ж', 'IT', '2002', '257895'),
+(10, 'Ferguson', 'Lindsay', '1983-04-22', 'ж', 'IT', '2002', '257895'),
+(11, 'Woods', 'Bethanie', '1980-12-02', 'ж', 'IT', '2002', '257895'),
+(12, 'Powell', 'Oliver', '1987-03-15', 'м', 'IT', '2002', '257895'),
+(13, 'Gordon', 'Jared', '1990-01-20', 'м', 'IT', '2002', '257895'),
+(14, 'Curtis', 'Lenard', '1984-08-20', 'м', 'IT', '2002', '257895'),
+(15, 'Harmon', 'Jeffrey', '1970-12-02-, 'м', 'legal department', '3002', '395874'),
+(16, 'Thompson', 'Rosa', '1978-03-12', 'ж' 'legal department', '3002', '395874'),
+(17, 'Bennett', 'Emma', '1983-07-31', 'ж' 'legal department', '3002', '395874'),
+(18, 'Murphy', 'Christine', '1988-05-12', 'ж', 'marketing department', '3025', '357831'),
+(19, 'Evans', 'Irma', '1990-03-15', 'ж', 'marketing department', '3025', '357831'),
+(20, 'Martin', 'Irene', '1989-04-01', 'ж', 'marketing department', '3025', '357831'),
+(21, 'Lynch', 'Adele', '1993-05-07', 'ж', 'orders', '1125', '135554'),
+(22, 'Garrett', 'Marianna', '1986-05-15', 'ж', 'orders', '1125', '135554'),
+(23, 'Davis', 'Betty', '1970-02-22', 'ж', 'orders', '1125', '135554'),
+(24, 'Hicks', 'Thomas', '1985-11-11', 'м', 'accounting department', '5217', '502145'),
+(25, 'Warren', 'Toby', '1974-04-21', 'м', 'accounting department', '5217', '502145'),
+(26, 'Elliott', 'Nicholas', '1981-08-18', 'accounting department', '5217', '502145'),
+(27, 'Bradford', 'Jeffery', '1986-09-29', 'accounting department', '5217', '502145'),
+(28, 'Miller', 'Nicholas', '1990-10-24', 'accounting department', '5217', '502145')
+;
