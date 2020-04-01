@@ -126,3 +126,27 @@ INSERT INTO rooms (r_depart_id, room, phone) VALUES
 (6, 1125, 135554),
 (7, 5217, 502145)
 ;
+
+INSERT INTO posts (id, name, salary) VALUES
+(1, 'marketing and advertising director', 200000),
+(2, 'specialist of the advertising department', 120000),
+(3, 'sales manager', 80000),
+(4, 'project manager', 90000),
+(5, 'specialist of financial department', 60000),
+(6, 'finance director', 150000),
+(7, 'assistant accountant', 40000),
+(8, 'IT project manager', 90000),
+(9, 'web developer', 120000),
+(10, 'web programmer', 120000),
+(11, 'web designer', 120000),
+(12, 'solicitor ', 60000),
+(13, 'lawyer', 80000),
+(14, 'legal department', 150000),
+(15, 'junior specialist of the marketing department', 40000),
+(16, 'marketer', 100000),
+(17, 'Senior internet marketer, 120000),
+(18, 'head of marketing department', 150000),
+(19, 'head of orders', 120000),   /*руководитель отдела заказов*/
+(20, 'specialist of orders', 70000),   /*специалист отдела заказов*/
+(21, 'chief accountant', 150000)
+(22, 'accountant', 60000),
