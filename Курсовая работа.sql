@@ -246,29 +246,17 @@ INSERT INTO adrphones (a_id, a_adr, a_phone) VALUES
 (28, NULL, 5554446)
 ;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO clients (c_id, c_company, c_adr, c_person, c_phone) VALUES
+(1, 'Citrus', NULL, 'Steven Horton', 1649765),
+(2, 'Metromarket', NULL, 'GregoryRiley', 6654458),
+(3, 'Atlantis', NULL, 'Ann Black', 4687545),
+(4, 'San-room', NULL, 'Jade Mathews', 1124693),
+(5, 'Aqualink', NULL, 'Ronald Flynn', 3586521),
+(6, 'Perfecto', NULL, 'Paul Houston', 9785520),
+(7, 'HydroZone', NULL, 'Meghan Martin', 6445219),
+(8, 'Miramix', NULL, 'Gordon Brooks', 5554141),
+(9, 'Oasis', NULL, 'Oliver Shaw', 2587414),
+(10, 'Trial Bussines Tehnologies', NULL, 9856613)
+;
 
 
