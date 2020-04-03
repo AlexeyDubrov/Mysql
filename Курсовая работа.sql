@@ -271,6 +271,6 @@ INSERT INTO projects (p_id, p_title, p_depart, p_company_id, p_chief, p_begin, p
 (6, 'Web analytics', 'advertising department', 3, 'Christopher','Reed', '2020-04-01', '2020-06-30', 962500),
 (7, 'Marketing research', 'marketing department', 10, 'Irma Evans', '2020-06-02', '2021-03-22', 778410),
 (8, 'Site development', 'IT', 8, 'Oliver Powell', '2019-12-05', '2020-02-22', 1250000),
-(9, 'Broker services', 'finance department', 3, 'Samuel Walker', '2018-12-10', '2021-01-01'),
-(10, 'Trust management', 'finance department', 4, 'Carol Bryant', '2019-06-12', '2022-01-10')
+(9, 'Broker services', 'finance department', 3, 'Samuel Walker', '2018-12-10', '2021-01-01', 845200),
+(10, 'Trust management', 'finance department', 4, 'Carol Bryant', '2019-06-12', '2022-01-10', 2125100)
 ;
