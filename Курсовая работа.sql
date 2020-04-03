@@ -150,7 +150,6 @@ INSERT INTO posts (id, name, salary) VALUES
 (19, 'head of orders', 120000.00),
 (20, 'specialist of orders', 70000.00),
 (21, 'chief accauntant', 150000.00),
-(22, 'accuntant', 60000.00),
 (23, 'accountant', 60000.00)
 ;
 
@@ -166,23 +165,54 @@ INSERT INTO employees (e_id, firstname, lastname, born, sex, depart_name, post_n
 (9, 'Bonnie', 'Carpenter', '1986-01-10', 'ж', 'IT', 'IT project manager', '2002', '257895'),
 (10, 'Lindsay','Ferguson', '1983-04-22', 'ж', 'IT', 'web developer', '2002', '257895'),
 (11, 'Bethanie', 'Woods', '1980-12-02', 'ж', 'IT', 'web developer', '2002', '257895'),
-(12,  'Oliver', 'Powell', '1987-03-15', 'м', 'IT', 'web programmer', '2002', '257895'),
+(12, 'Oliver', 'Powell', '1987-03-15', 'м', 'IT', 'web programmer', '2002', '257895'),
 (13, 'Jared', 'Gordon', '1990-01-20', 'м', 'IT', 'web programmer', '2002', '257895'),
 (14, 'Lenard','Curtis', '1984-08-20', 'м', 'IT', '2002', 'web designer', '2002', '257895'),
 (15, 'Jeffrey', 'Harmon', '1970-12-02', 'м', 'IT', 'web developer', '2002', '257895'),
 (16, 'Rosa', 'Thompson', '1978-03-12', 'ж' 'legal department', 'head of legal department', '3002', '395874'),
 (17, 'Emma','Bennett', '1983-07-31', 'ж' 'legal department', 'lawyer', '3002', '395874'),
-(18,  'Christine', 'Murphy', '1988-05-12', 'ж', 'marketing department', 'head of marketing department', '3025', '357831'),
+(18, 'Christine', 'Murphy', '1988-05-12', 'ж', 'marketing department', 'head of marketing department', '3025', '357831'),
 (19, 'Irma', 'Evans', '1990-03-15', 'ж', 'marketing department', 'senior internet marketer', '3025', '357831'),
 (20, 'Irene','Martin', '1989-04-01', 'ж', 'marketing department', 'marketer', '3025', '357831'),
 (21, 'Adele', 'Lynch', '1993-05-07', 'ж', 'orders', '1125', 'specialist of orders', '135554'),
 (22, 'Marianna', 'Garrett', '1986-05-15', 'ж', 'orders', 'specialist of orders', '1125', '135554'),
 (23, 'Betty', 'Davis', '1970-02-22', 'ж', 'orders', '1125', 'head of orders', '135554'),
-(24, 'Hicks', '1985-11-11', 'м', 'accounting department', '5217', '502145'),
-(25, 'Thomas', 'Warren', 'Toby', '1974-04-21', 'м', 'accounting department', '5217', '502145'),
+(24, 'Bonnie', 'Hicks', '1985-11-11', 'м', 'accounting department', 'accauntant', '5217', '502145'),
+(25, 'Thomas', 'Warren', 'Toby', '1974-04-21', 'м', 'accounting department', 'accauntant', '5217', '502145'),
 (26, 'Nicholas', 'Elliott', '1981-08-18', 'accounting department', 'chief accauntant', '5217', '502145'),
-(27, 'Jeffery', 'Bradford', '1986-09-29', 'accounting department', 'accuntant', '5217', '502145'),
-(28, 'Nicholas', 'Miller', '1990-10-24', 'accounting department', 'accuntant', '5217', '502145')
+(27, 'Jeffery', 'Bradford', '1986-09-29', 'accounting department', 'accauntant', '5217', '502145'),
+(28, 'Nicholas', 'Miller', '1990-10-24', 'accounting department', 'assistant accauntant', '5217', '502145')
+;
+
+INSERT INTO edu (u_id, u_spec, u_year) VALUES  /* 'начальное', 'среднее', 'высшее', 'средне-специальное' */
+(1, 'высшее', 1993 ),
+(2, 'высшее', 1995),
+(3, 'средне-специальное', 1996),
+(4, 'средне-специальное', 2002),
+(5, 'высшее', 1993),
+(6, 'высшее', 2001),
+(7, 'высшее', 2007),
+(8, 'высшее', 2005),
+(9, 'высшее', 2009),
+(10, 'высшее', 2006),
+(11, 'высшее', 2003),
+(12, 'высшее', 2010),
+(13, 'высшеее', 2013),
+(14, 'высшее', 2007),
+(15, 'высшее', 1993),
+(16, 'высшее', 2000),
+(17, 'высшее', 2006),
+(18, 'высшее', 2010),
+(19, 'высшее', 2009),
+(20, 'средне-специальное', 2006),
+(21, 'среднее', 2000),
+(22, 'средне-специальное', 2006),
+(23, 'высшее', 1992),
+(24, 'высшее', 2007),
+(25, 'средне-специальное', 1994),
+(26, 'высшее', 2003),
+(27, 'высшее', 2008),
+(28, 'среднее', 2007)
 ;
 
 
