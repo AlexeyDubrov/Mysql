@@ -153,6 +153,9 @@ INSERT INTO posts (id, name, salary) VALUES
 (23, 'accountant', 60000.00)
 ;
 
+
+-- КОД НИЖЕ НЕ ИСПОЛНЯЕТСЯ....
+
 INSERT INTO employees (e_id, firstname, lastname, born, sex, depart_name, post_name, e_room, e_phone) VALUES
 (1, 'Robert','Miller', '1970-10-25', 'м', 'advertising department', 'marketing and advertising director', '1001', '123322'),
 (2, 'Augustine','Bishop',  '1972-03-02', 'м', 'advertising department', 'specialist of the advertising department', '1001', '123322'),
