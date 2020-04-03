@@ -259,7 +259,7 @@ INSERT INTO clients (c_id, c_company, c_adr, c_person, c_phone) VALUES
 (7, 'HydroZone', NULL, 'Meghan Martin', 6445219),
 (8, 'Miramix', NULL, 'Gordon Brooks', 5554141),
 (9, 'Oasis', NULL, 'Oliver Shaw', 2587414),
-(10, 'Trial Bussines Tehnologies', NULL, 9856613)
+(10, 'Trial Bussines Tehnologies', 'Harvey Ramsey', NULL, 9856613)
 ;
 
 
