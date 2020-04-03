@@ -262,4 +262,15 @@ INSERT INTO clients (c_id, c_company, c_adr, c_person, c_phone) VALUES
 (10, 'Trial Bussines Tehnologies', 'Harvey Ramsey', NULL, 9856613)
 ;
 
-
+INSERT INTO projects (p_id, p_title, p_depart, p_company_id, p_chief, p_begin, p_end, p_cost) VALUES
+(1, 'E-commerce shop', 'IT', 6, 'Lindsay Ferguson', '2019-02-10', '2020-05-25', 2522140),
+(2, 'On-line school', 'IT', 9, 'Bethanie Woods', '2019-05-26', '2020-01-30', 2500600),
+(3, 'Accounting outsourcing', 'accounting department', 1, 'Jeffery Bradford', '2015-01-01', '2025-12-31', 1100780),
+(4, 'Tax advice', 'accounting department', 5, 'Thomas Warren', '2018-10-13', '2021-12-31', 5000000),
+(5, 'Contextual advertising', 'advertising department', 2, 'Augustine Bishop', '2019-05-02', '2019-11-11', 700000),
+(6, 'Web analytics', 'advertising department', 3, 'Christopher','Reed', '2020-04-01', '2020-06-30', 962500),
+(7, 'Marketing research', 'marketing department', 10, 'Irma Evans', '2020-06-02', '2021-03-22', 778410),
+(8, 'Site development', 'IT', 8, 'Oliver Powell', '2019-12-05', '2020-02-22', 1250000),
+(9, 'Broker services', 'finance department', 3, 'Samuel Walker', '2018-12-10', '2021-01-01'),
+(10, 'Trust management', 'finance department', 4, 'Carol Bryant', '2019-06-12', '2022-01-10')
+;
