@@ -5,13 +5,13 @@ USE coursework;
 CREATE TABLE departs(
 	d_id SERIAL, 
 	d_name varchar(100) NOT NULL, 
-	PRIMARY KEY (d_id, d_name)
+	PRIMARY KEY (d_id, d_name),
+	INDEX d_name_idx(d_name)
 );
-ALTER TABLE departs ADD INDEX d_name_idx(d_name);
 
 CREATE TABLE rooms(
 	r_depart_id SERIAL, 
-	room  numeric(4) not null,
+	room INT not null,
 	phone bigint, 
 	unique(room, phone),
 	FOREIGN KEY (r_depart_id) REFERENCES departs(d_id),
@@ -21,7 +21,7 @@ CREATE TABLE rooms(
 create table posts ( 
 	id SERIAL,			/*таблица должности, post - должность, salary - оклад*/
 	name varchar(100), 
-	salary numeric(6,2)  not null check(salary>=4500),
+	salary INT not null check(salary>=4500),
 	PRIMARY KEY(id, name),
 	INDEX id_name_salary_idx(id, name, salary)
 );
@@ -33,15 +33,13 @@ create table employees (
 	born date not null, 
 	sex char(1) check(sex in ('ж','м')), 
 	depart_name varchar(50),      /* отдел  */
-	post_name varchar(30), /*должность*/
+	post_name varchar(50), /*должность*/
 	e_room INT not null, 
 	e_phone bigint not null, 
 	FOREIGN KEY(e_room,e_phone) REFERENCES rooms(room, phone),
 	FOREIGN KEY (depart_name) REFERENCES departs(d_name),
-	FOREIGN KEY (e_id) REFERENCES posts(id),
 	INDEX e_id_firstname_lastname_idx(e_id, firstname, lastname)
 ); 
-
 
 create table edu ( 
 	u_id  SERIAL PRIMARY KEY, /*id сотрудника*/
@@ -54,7 +52,7 @@ create table edu (
 create table adrphones (	/*адреса и телефоны */
 	a_id SERIAL PRIMARY KEY, /*  id сотрудника */
 	a_adr  varchar(50), 
-	a_phone  varchar(30),
+	a_phone BIGINT NULL,
 	FOREIGN KEY (a_id) REFERENCES employees(e_id),
 	INDEX a_id_a_adr_a_phone_idx(a_id, a_adr, a_phone)
 );
@@ -67,27 +65,29 @@ create table clients (
 	c_phone BIGINT,
 	INDEX c_id_idx(c_id)
 );
+ALTER TABLE coursework.clients MODIFY COLUMN c_adr varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL;
+
 
 create table projects ( 
 	p_id  SERIAL PRIMARY KEY, 
 	p_title  varchar(100)  not null, 
 	p_depart varchar (50),              /*  отдел  */
 	p_company_id BIGINT UNSIGNED NOT NULL UNIQUE,   /*  заказчик */
-	p_chief  numeric(4)  references employees, 
+	p_chief varchar(50) NOT NULL,
 	p_begin  date not null, 
 	p_end  date not null, 
-	p_finish  date, 
-	p_cost  numeric(10) not null check(p_cost>0), 
+	p_cost  BIGINT not null check(p_cost>0), 
 	check (p_end>p_begin), 
-	check (p_finish is null or p_finish>p_begin),
 	FOREIGN KEY (p_id) REFERENCES departs(d_id),
 	FOREIGN KEY (p_company_id) REFERENCES clients(c_id),
 	INDEX p_id_p_company_idx(p_id, p_company_id)
 ); 
+ALTER TABLE coursework.projects MODIFY COLUMN p_depart BIGINT NULL;
+
 
 create table stages (              /*  Этапы проекта */
 	s_pro_id  SERIAL PRIMARY KEY, 
-	s_num  numeric(2)  not null,    /* Номер этапа */
+	s_num  INT not null,    /* Номер этапа */
 	s_title  varchar(200)  not null, /* Название этапа */
 	s_begin  date   not null, /* дата начала  */
 	s_finish  date   not null,  /*  Дата окончания  */
@@ -97,6 +97,7 @@ create table stages (              /*  Этапы проекта */
 	FOREIGN KEY (s_pro_id) REFERENCES projects(p_id)
 );
 
+
 create table job ( 
 	j_pro_id SERIAL PRIMARY KEY,  /*  Проект  */
 	j_emp_id BIGINT UNSIGNED NOT NULL UNIQUE, /*  Сотрудник  */
@@ -105,8 +106,6 @@ create table job (
 	FOREIGN KEY (j_pro_id) REFERENCES projects (p_id),
 	FOREIGN KEY (j_emp_id) REFERENCES employees (e_id)
 );
-
-
 
 INSERT INTO departs VALUES
 (1, 'advertising department'),
@@ -150,13 +149,10 @@ INSERT INTO posts (id, name, salary) VALUES
 (19, 'head of orders', 120000.00),
 (20, 'specialist of orders', 70000.00),
 (21, 'chief accauntant', 150000.00),
-(23, 'accountant', 60000.00)
+(22, 'accountant', 60000.00)
 ;
 
-
--- КОД НИЖЕ НЕ ИСПОЛНЯЕТСЯ....
-
-INSERT INTO employees (e_id, firstname, lastname, born, sex, depart_name, post_name, e_room, e_phone) VALUES
+REPLACE INTO employees (e_id, firstname, lastname, born, sex, depart_name, post_name, e_room, e_phone) VALUES
 (1, 'Robert','Miller', '1970-10-25', 'м', 'advertising department', 'marketing and advertising director', '1001', '123322'),
 (2, 'Augustine','Bishop',  '1972-03-02', 'м', 'advertising department', 'specialist of the advertising department', '1001', '123322'),
 (3, 'Christopher','Reed',  '1976-07-10', 'м', 'advertising department', 'specialist of the advertising department', '1001', '123322'),
@@ -170,27 +166,27 @@ INSERT INTO employees (e_id, firstname, lastname, born, sex, depart_name, post_n
 (11, 'Bethanie', 'Woods', '1980-12-02', 'ж', 'IT', 'web developer', '2002', '257895'),
 (12, 'Oliver', 'Powell', '1987-03-15', 'м', 'IT', 'web programmer', '2002', '257895'),
 (13, 'Jared', 'Gordon', '1990-01-20', 'м', 'IT', 'web programmer', '2002', '257895'),
-(14, 'Lenard','Curtis', '1984-08-20', 'м', 'IT', '2002', 'web designer', '2002', '257895'),
+(14, 'Lenard','Curtis', '1984-08-20', 'м', 'IT', 'web designer', '2002', '257895'),
 (15, 'Jeffrey', 'Harmon', '1970-12-02', 'м', 'IT', 'web developer', '2002', '257895'),
-(16, 'Rosa', 'Thompson', '1978-03-12', 'ж' 'legal department', 'head of legal department', '3002', '395874'),
-(17, 'Emma','Bennett', '1983-07-31', 'ж' 'legal department', 'lawyer', '3002', '395874'),
-(18, 'Christine', 'Murphy', '1988-05-12', 'ж', 'marketing department', 'head of marketing department', '3025', '357831'),
-(19, 'Irma', 'Evans', '1990-03-15', 'ж', 'marketing department', 'senior internet marketer', '3025', '357831'),
-(20, 'Irene','Martin', '1989-04-01', 'ж', 'marketing department', 'marketer', '3025', '357831'),
-(21, 'Adele', 'Lynch', '1993-05-07', 'ж', 'orders', '1125', 'specialist of orders', '135554'),
+(16, 'Rosa', 'Thompson', '1978-03-12', 'ж', 'legal department', 'head of legal department', 3002, 395874),
+(17, 'Emma', 'Bennett', '1983-07-31', 'ж', 'legal department', 'lawyer', 3002, 395874),
+(18, 'Christine', 'Murphy', '1988-05-12', 'ж', 'marketing department', 'head of marketing department', 3025, 357831),
+(19, 'Irma', 'Evans', '1990-03-15', 'ж', 'marketing department', 'senior internet marketer', 3025, 357831),
+(20, 'Irene', 'Martin', '1989-04-01', 'ж', 'marketing department', 'marketer', 3025, 357831), 
+(21, 'Adele', 'Lynch', '1993-05-07', 'ж', 'orders', 'specialist of orders', '1125','135554'),
 (22, 'Marianna', 'Garrett', '1986-05-15', 'ж', 'orders', 'specialist of orders', '1125', '135554'),
-(23, 'Betty', 'Davis', '1970-02-22', 'ж', 'orders', '1125', 'head of orders', '135554'),
+(23, 'Betty', 'Davis', '1970-02-22', 'ж', 'orders', 'head of orders', '1125', '135554'),
 (24, 'Bonnie', 'Hicks', '1985-11-11', 'м', 'accounting department', 'accauntant', '5217', '502145'),
-(25, 'Thomas', 'Warren', 'Toby', '1974-04-21', 'м', 'accounting department', 'accauntant', '5217', '502145'),
-(26, 'Nicholas', 'Elliott', '1981-08-18', 'accounting department', 'chief accauntant', '5217', '502145'),
-(27, 'Jeffery', 'Bradford', '1986-09-29', 'accounting department', 'accauntant', '5217', '502145'),
-(28, 'Nicholas', 'Miller', '1990-10-24', 'accounting department', 'assistant accauntant', '5217', '502145')
+(25, 'Thomas', 'Warren', '1974-04-21', 'м', 'accounting department', 'accauntant', '5217', '502145'),
+(26, 'Nicholas', 'Elliott', '1981-08-18', 'м', 'accounting department', 'chief accauntant', '5217', '502145'),
+(27, 'Jeffery', 'Bradford', '1986-09-29', 'м', 'accounting department', 'accauntant', '5217', '502145'),
+(28, 'Nicholas', 'Miller', '1990-10-24', 'м', 'accounting department', 'assistant accauntant', '5217', '502145')
 ;
 
-INSERT INTO edu (u_id, u_spec, u_year) VALUES  /* 'начальное', 'среднее', 'высшее', 'средне-специальное' */
+REPLACE INTO edu (u_id, u_spec, u_year) VALUES  /* 'начальное', 'среднее', 'высшее', 'средне-специальное' */
 (1, 'высшее', 1993 ),
 (2, 'высшее', 1995),
-(3, 'средне-специальное', 1996),
+(2, 'средне-специальное', 1996),
 (4, 'средне-специальное', 2002),
 (5, 'высшее', 1993),
 (6, 'высшее', 2001),
@@ -200,7 +196,7 @@ INSERT INTO edu (u_id, u_spec, u_year) VALUES  /* 'начальное', 'сре�
 (10, 'высшее', 2006),
 (11, 'высшее', 2003),
 (12, 'высшее', 2010),
-(13, 'высшеее', 2013),
+(13, 'высшее', 2013),
 (14, 'высшее', 2007),
 (15, 'высшее', 1993),
 (16, 'высшее', 2000),
@@ -218,7 +214,8 @@ INSERT INTO edu (u_id, u_spec, u_year) VALUES  /* 'начальное', 'сре�
 (28, 'среднее', 2007)
 ;
 
-INSERT INTO adrphones (a_id, a_adr, a_phone) VALUES 
+
+REPLACE INTO adrphones (a_id, a_adr, a_phone) VALUES 
 (1, NULL, 45621457),
 (2, NULL, 12346547),
 (3, NULL, 79864204),
@@ -249,6 +246,7 @@ INSERT INTO adrphones (a_id, a_adr, a_phone) VALUES
 (28, NULL, 5554446)
 ;
 
+
 INSERT INTO clients (c_id, c_company, c_adr, c_person, c_phone) VALUES
 (1, 'Citrus', NULL, 'Steven Horton', 1649765),
 (2, 'Metromarket', NULL, 'GregoryRiley', 6654458),
@@ -259,18 +257,31 @@ INSERT INTO clients (c_id, c_company, c_adr, c_person, c_phone) VALUES
 (7, 'HydroZone', NULL, 'Meghan Martin', 6445219),
 (8, 'Miramix', NULL, 'Gordon Brooks', 5554141),
 (9, 'Oasis', NULL, 'Oliver Shaw', 2587414),
-(10, 'Trial Bussines Tehnologies', 'Harvey Ramsey', NULL, 9856613)
+(10, 'Trial Bussines Tehnologies', NULL,'Harvey Ramsey',  9856613)
 ;
 
-INSERT INTO projects (p_id, p_title, p_depart, p_company_id, p_chief, p_begin, p_end, p_cost) VALUES
-(1, 'E-commerce shop', 'IT', 6, 'Lindsay Ferguson', '2019-02-10', '2020-05-25', 2522140),
-(2, 'On-line school', 'IT', 9, 'Bethanie Woods', '2019-05-26', '2020-01-30', 2500600),
-(3, 'Accounting outsourcing', 'accounting department', 1, 'Jeffery Bradford', '2015-01-01', '2025-12-31', 1100780),
-(4, 'Tax advice', 'accounting department', 5, 'Thomas Warren', '2018-10-13', '2021-12-31', 5000000),
-(5, 'Contextual advertising', 'advertising department', 2, 'Augustine Bishop', '2019-05-02', '2019-11-11', 700000),
-(6, 'Web analytics', 'advertising department', 3, 'Christopher','Reed', '2020-04-01', '2020-06-30', 962500),
-(7, 'Marketing research', 'marketing department', 10, 'Irma Evans', '2020-06-02', '2021-03-22', 778410),
-(8, 'Site development', 'IT', 8, 'Oliver Powell', '2019-12-05', '2020-02-22', 1250000),
-(9, 'Broker services', 'finance department', 3, 'Samuel Walker', '2018-12-10', '2021-01-01', 845200),
-(10, 'Trust management', 'finance department', 4, 'Carol Bryant', '2019-06-12', '2022-01-10', 2125100)
+REPLACE INTO projects (p_id, p_title, p_depart, p_company_id, p_chief, p_begin, p_end, p_cost) VALUES
+(3, 'E-commerce shop', 3, 6, 'Lindsay Ferguson', '2019-02-10', '2020-05-25', 2522140),
+(3, 'On-line school', 3, 9, 'Bethanie Woods', '2019-05-26', '2020-01-30', 2500600),
+(7, 'Accounting outsourcing', 7, 1, 'Jeffery Bradford', '2015-01-01', '2025-12-31', 1100780),
+(7, 'Tax advice', 7, 5, 'Thomas Warren', '2018-10-13', '2021-12-31', 5000000),
+(1, 'Contextual advertising', 1, 2, 'Augustine Bishop', '2019-05-02', '2019-11-11', 700000),
+(1, 'Web analytics', 1, 3, 'Christopher Reed', '2020-04-01', '2020-06-30', 962500),
+(5, 'Marketing research', 5, 10, 'Irma Evans', '2020-06-02', '2021-03-22', 778410),
+(3, 'Site development', 3, 8, 'Oliver Powell', '2019-12-05', '2020-02-22', 1250000),
+(2, 'Broker services', 2, 3, 'Samuel Walker', '2018-12-10', '2021-01-01', 845200),
+(2, 'Trust management', 2, 4, 'Carol Bryant', '2019-06-12', '2022-01-10', 2125100)
+;
+
+INSERT INTO stages (s_pro_id, s_num, s_title, s_begin, s_finish, s_cost) VALUES
+(1, 3, 'in the operation', '2019-12-20', '2020-04-30', 1255444),
+(2, 4, 'finished', '2020-01-25', '2020-01-30',50000),
+(3, 3, 'in the operation', '2015-08-30', '2025-12-10', 800000),
+(4, 3, 'in the operation', '2019-01-01', '2021-12-01', 4890100),
+(5, 4, 'finished', '2019-11-01', '2019-11-11', 10000),
+(6, 2, 'payment', '2020-04-03', '2020-04-10', 100),
+(7, 1, 'agreement', '2020-04-02', '2020-04-30', 120000),
+(8, 4, 'finished', '2020-01-25', '2020-02-22', 54200),
+(9, 3, 'in the operation', '2019-02-01', '2020-12-01', 790500),
+(10, 1, 'agreement', '2019-06-12', '2020-05-01', 154000)
 ;
