@@ -99,11 +99,10 @@ create table stages (              /*  Этапы проекта */
 
 
 create table job ( 
-	j_pro_id SERIAL PRIMARY KEY,  /*  Проект  */
-	j_emp_id BIGINT UNSIGNED NOT NULL UNIQUE, /*  Сотрудник  */
+	j_pro varchar(50),  /*  Проект  */
+	j_emp_id SERIAL PRIMARY KEY, /*  Сотрудник  */
 	j_role  ENUM ('исполнитель', 'консультант') not null,  
 	check(j_role in ('исполнитель', 'консультант')),
-	FOREIGN KEY (j_pro_id) REFERENCES projects (p_id),
 	FOREIGN KEY (j_emp_id) REFERENCES employees (e_id)
 );
 
@@ -284,4 +283,17 @@ INSERT INTO stages (s_pro_id, s_num, s_title, s_begin, s_finish, s_cost) VALUES
 (8, 4, 'finished', '2020-01-25', '2020-02-22', 54200),
 (9, 3, 'in the operation', '2019-02-01', '2020-12-01', 790500),
 (10, 1, 'agreement', '2019-06-12', '2020-05-01', 154000)
+;
+
+REPLACE INTO job (j_pro, j_emp_id, j_role) VALUES
+('E-commerce shop', 10, 'исполнитель'),
+('On-line school', 11, 'исполнитель'),
+('Tax advice', 27, 'исполнитель'),
+('Accounting outsourcing', 25, 'консультант'),
+('Contextual advertising', 2, 'исполнитель'),
+('Web analytics', 3, 'консультант'),
+('Marketing research', 19, 'консультант'),
+('E-commerce shop', 12, 'исполнитель'),
+('Broker services', 6, 'консультант'),
+('Trust management', 8, 'исполнитель')
 ;
