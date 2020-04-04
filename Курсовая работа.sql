@@ -94,7 +94,7 @@ create table stages (              /*  Этапы проекта */
 	s_cost  numeric(10)  not null,  /*  стоимость этапа */
 	check (s_cost>0), 
 	check (s_finish>s_begin), 
-	FOREIGN KEY (s_pro_id) REFERENCES projects(p_id)
+	INDEX s_pro_id_idx(s_pro_id)
 );
 
 
