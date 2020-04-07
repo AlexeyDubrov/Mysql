@@ -69,10 +69,10 @@ ALTER TABLE coursework.clients MODIFY COLUMN c_adr varchar(50) CHARACTER SET utf
 
 
 create table projects ( 
-	p_id  SERIAL PRIMARY KEY, 
+	p_id  BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
 	p_title  varchar(100)  not null, 
-	p_depart varchar (50),              /*  отдел  */
-	p_company_id BIGINT UNSIGNED NOT NULL UNIQUE,   /*  заказчик */
+	p_depart BIGINT NULL,              /*  отдел  */
+	p_company_id BIGINT UNSIGNED NOT NULL,   /*  заказчик */
 	p_chief varchar(50) NOT NULL,
 	p_begin  date not null, 
 	p_end  date not null, 
@@ -82,7 +82,7 @@ create table projects (
 	FOREIGN KEY (p_company_id) REFERENCES clients(c_id),
 	INDEX p_id_p_company_idx(p_id, p_company_id)
 ); 
-ALTER TABLE coursework.projects MODIFY COLUMN p_depart BIGINT NULL;
+
 
 
 create table stages (              /*  Этапы проекта */
@@ -259,7 +259,7 @@ INSERT INTO clients (c_id, c_company, c_adr, c_person, c_phone) VALUES
 (10, 'Trial Bussines Tehnologies', NULL,'Harvey Ramsey',  9856613)
 ;
 
-REPLACE INTO projects (p_id, p_title, p_depart, p_company_id, p_chief, p_begin, p_end, p_cost) VALUES
+INSERT INTO projects (p_id, p_title, p_depart, p_company_id, p_chief, p_begin, p_end, p_cost) VALUES
 (3, 'E-commerce shop', 3, 6, 'Lindsay Ferguson', '2019-02-10', '2020-05-25', 2522140),
 (3, 'On-line school', 3, 9, 'Bethanie Woods', '2019-05-26', '2020-01-30', 2500600),
 (7, 'Accounting outsourcing', 7, 1, 'Jeffery Bradford', '2015-01-01', '2025-12-31', 1100780),
@@ -271,6 +271,7 @@ REPLACE INTO projects (p_id, p_title, p_depart, p_company_id, p_chief, p_begin, 
 (2, 'Broker services', 2, 3, 'Samuel Walker', '2018-12-10', '2021-01-01', 845200),
 (2, 'Trust management', 2, 4, 'Carol Bryant', '2019-06-12', '2022-01-10', 2125100)
 ;
+
 
 INSERT INTO stages (s_pro_id, s_num, s_title, s_begin, s_finish, s_cost) VALUES
 (1, 3, 'in the operation', '2019-12-20', '2020-04-30', 1255444),
@@ -297,3 +298,62 @@ REPLACE INTO job (j_pro, j_emp_id, j_role) VALUES
 ('Broker services', 6, 'консультант'),
 ('Trust management', 8, 'исполнитель')
 ;
+
+-- Задание №6 Скрипты характерных выборок (вкл. группировки, Join'ы, вложенные таблицы)
+SELECT avg(salary) AS avg_salary FROM posts;
+
+SELECT e_id, firstname, lastname, substring(born, 1,3) FROM employees; 
+SELECT * FROM employees WHERE sex ='м';
+SELECT *FROM employees WHERE sex='ж';
+SELECT * FROM employees ORDER BY born DESC;
+SELECT count(*) FROM projects;
+
+SELECT
+  r_depart_id, room, phone
+ FROM
+  rooms r2 
+WHERE
+  r_depart_id = (SELECT d_id FROM departs WHERE d_name = 'finance department');
+ 
+ 
+ SELECT *FROM departs JOIN rooms;
+
+
+SELECT 
+ 	e_id,
+ 	e_room,
+ 	e_phone
+ FROM 
+ 	employees AS e
+ LEFT JOIN 
+ 	rooms AS r
+ ON 
+ 	e_room = r.room;
+ 	
+ 
+ SELECT 
+ 	p_id,
+ 	p_title,
+ 	p_depart,
+ 	p_company_id
+ FROM 
+ 	projects  
+ RIGHT JOIN 
+ 	 clients 
+ ON 
+ 	p_depart = c_company;
+
+ 
+ 
+CREATE VIEW info_view 
+AS SELECT * FROM  posts 
+ORDER BY salary DESC; 
+SELECT * FROM info_view;
+ 
+
+CREATE VIEW  info_view_1
+AS SELECT *
+FROM rooms, departs
+WHERE rooms.r_depart_id = d_id
+;
+SELECT *FROM info_view_1;
