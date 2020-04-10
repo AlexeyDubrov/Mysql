@@ -344,7 +344,8 @@ SELECT
  	p_depart = c_company;
 
  
- 
+ -- Задание 7. Представления (минимум 2).
+
 CREATE VIEW info_view 
 AS SELECT * FROM  posts 
 ORDER BY salary DESC; 
@@ -357,3 +358,21 @@ FROM rooms, departs
 WHERE rooms.r_depart_id = d_id
 ;
 SELECT *FROM info_view_1;
+
+
+-- Задание №8. Хранимые процедуры / триггеры.
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS insert_clients;
+CREATE PROCEDURE insert_clients (c_id bigint, c_company varchar(40), c_adr varchar(50), c_person varchar (50), c_phone bigint)
+	BEGIN
+		INSERT INTO clients (c_id, c_company, c_adr, c_person, c_phone)
+		value (c_id, c_company, c_adr, c_person, c_phone);
+	END //
+
+delimiter ;
+
+CALL insert_clients(11, 'MMM', NULL, 'James Bond', 1548945);
+-- В Бивере ошибка, а в консоли работает.
+
+
