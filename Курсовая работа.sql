@@ -375,4 +375,14 @@ delimiter ;
 CALL insert_clients(11, 'MMM', NULL, 'James Bond', 1548945);
 -- В Бивере ошибка, а в консоли работает.
 
+CREATE TABLE project_logs (
+p_l_id INT NOT NULL,
+p_date TEXT NOT NULL
+);
 
+DELIMITER /
+CREATE TRIGGER p_log BEFORE INSERT ON projects
+FOR EACH ROW BEGIN
+     INSERT INTO project_logs(p_l_id, p_date) VALUES (NEW.p_id, now());
+   END /
+-- В консоли код исполняется, здесть снова нет почему то.
